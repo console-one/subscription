@@ -2,6 +2,14 @@
   "name": "@console-one/subscription",
   "version": "0.1.0",
   "description": "Observable/promise hybrid with a late-bound value abstraction, composable pipes, and an internal event queue. Use as a richer alternative to Promise when values arrive over time.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/console-one/subscription.git"
+  },
+  "bugs": {
+    "url": "https://github.com/console-one/subscription/issues"
+  },
+  "homepage": "https://github.com/console-one/subscription#readme",
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -13,8 +21,8 @@
   },
   "files": [
     "dist",
-    "src",
-    "README.md"
+    "README.md",
+    "LICENSE"
   ],
   "scripts": {
     "build": "tsc",
@@ -23,9 +31,15 @@
     "test:watch": "vitest",
     "prepublishOnly": "npm run clean && npm run build && npm test"
   },
-  "keywords": ["subscription", "observable", "reactive", "promise", "event"],
-  "license": "UNLICENSED",
-  "private": true,
+  "keywords": [
+    "subscription",
+    "observable",
+    "reactive",
+    "promise",
+    "event"
+  ],
+  "author": "Andrew Chalmers",
+  "license": "MIT",
   "dependencies": {
     "@console-one/collections": "file:../collections"
   },
