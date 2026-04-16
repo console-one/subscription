@@ -41,7 +41,7 @@
   "author": "Andrew Chalmers",
   "license": "MIT",
   "dependencies": {
-    "@console-one/collections": "file:../collections"
+    "@console-one/collections": "^0.1.0"
   },
   "devDependencies": {
     "typescript": "^5.4.0",

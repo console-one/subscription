@@ -11,4 +11,4 @@ export {
   type transformer,
   waitthen,
   queueify,
-} from './subscription'
+} from './subscription.js'
