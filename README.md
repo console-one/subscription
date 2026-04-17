@@ -131,17 +131,13 @@ This makes `Subscription` usable as a state container, not just an event stream.
 
 - [`@console-one/collections`](../collections) — `Subscription` uses `ObservableQueue` internally as its event buffer. You don't need to import it directly; `Subscription` wraps it.
 
-## Fixed during extraction
+## Notes on behavior
 
-Tests immediately surfaced three critical bugs in the source version that made most of the advertised surface dead-on-arrival:
+Three paths behave the way callers would reasonably expect, which not every early iteration of this library got right:
 
-1. **`fail()` had an inverted condition.** The source read `if (this.numCurrentErrorListeners) throw error; else listeners.forEach(...)`. This threw the error exactly when there *was* an error listener — the opposite of what you want. `.subscribe(_, err => ...)` never received anything, and `sub.reject(...)` blew up instead. Fixed: the condition is now normal — invoke listeners when present, throw only when there's nobody to catch.
-
-2. **`unsubscribe()` couldn't be called without an argument.** The source pushed its `teardown` parameter into `this.teardowns` without a type check, then later called each entry. Calling `unsub()` with no args pushed `undefined` into the array, which crashed on flush. Fixed: `unsubscribe` now accepts `teardown?: () => void`, only pushes if it's a function, and only calls functions at flush time.
-
-3. **`then()` / `first()` destroyed the downstream subscription before resolving it.** The source's `then()` closed over `let next = new Subscription()` and then set `next = undefined` inside teardown callbacks. `first()` was implemented as `then((data, unsub) => { unsub(); return handler(data); })` — so `unsub()` ran first, wiped `next`, and then the outer code tried `next.resolve(result)` on an undefined reference. Fixed: `first()` calls the handler before unsubscribing, and `then()` no longer sets `next = undefined` at all (the GC handles it fine).
-
-All three were pre-existing bugs in the monorepo source — no caller can have been successfully using these paths. The fixes are strictly additive.
+- **`fail()` invokes error listeners when present and throws only when there's nobody to catch** — so `.subscribe(_, err => ...)` and `sub.reject(...)` both work.
+- **`unsubscribe()` can be called with or without a teardown argument.** Calls without an argument are no-ops.
+- **`then()` and `first()` preserve the downstream subscription.** `first()` calls the handler before unsubscribing, so you get the value, not a reference error.
 
 ## Tests
 
