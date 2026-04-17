@@ -1,6 +1,6 @@
 {
   "name": "@console-one/subscription",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Observable/promise hybrid with a late-bound value abstraction, composable pipes, and an internal event queue. Use as a richer alternative to Promise when values arrive over time.",
   "repository": {
     "type": "git",
@@ -44,8 +44,8 @@
     "@console-one/collections": "^0.1.0"
   },
   "devDependencies": {
+    "@types/node": "^20.0.0",
     "typescript": "^5.4.0",
-    "vitest": "^1.6.0",
-    "@types/node": "^20.0.0"
+    "vitest": "^1.6.0"
   }
 }
