@@ -25,7 +25,7 @@
     "LICENSE"
   ],
   "scripts": {
-    "build": "tsc",
+    "build": "tsc -p tsconfig.build.json",
     "clean": "rm -rf dist",
     "test": "vitest run",
     "test:watch": "vitest",
@@ -41,7 +41,8 @@
   "author": "Andrew Chalmers",
   "license": "MIT",
   "dependencies": {
-    "@console-one/collections": "^0.1.0"
+    "@console-one/collections": "^0.1.0",
+    "@console-one/multimap": "github:console-one/multimap"
   },
   "devDependencies": {
     "@types/node": "^20.0.0",
